@@ -1,13 +1,24 @@
 import express, { json, Request, Response } from 'express';
+import dotenv from 'dotenv';
+import 'express-async-errors';
+import cookieSession from 'cookie-session';
+
 import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from './errors/not-found-error';
-import 'express-async-errors';
 import { signupRouter } from './routes/signup';
 import { ConnectDB } from './config/db';
 
+dotenv.config();
+
 const app = express();
 app.use(express.json());
-
+app.set('trust proxy', true);
+app.use(
+  cookieSession({
+    signed: false,
+    secure: false,
+  })
+);
 ConnectDB();
 
 app.use(signupRouter);

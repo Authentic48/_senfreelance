@@ -3,6 +3,7 @@ import { body } from 'express-validator';
 import { BadRequestError } from '../errors/bad-request';
 import { validateRequest } from '../middlewares/request-validation';
 import { User } from '../models/user-model';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -32,6 +33,20 @@ router.post(
       password,
       isFreelancer,
     });
+
+    const userjwt = jwt.sign(
+      {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        isFreelancer: user.isFreelancer,
+      },
+      process.env.JWT_KEY!
+    );
+
+    req.session = {
+      jwt: userjwt,
+    };
 
     res.status(201).send(user);
   }
