@@ -1,12 +1,15 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
+import { BadRequestError } from '../errors/bad-request';
 import { validateRequest } from '../middlewares/request-validation';
+import { User } from '../models/user-model';
 
 const router = express.Router();
 
 router.post(
   '/api/users/signup',
   [
+    body('name').notEmpty().withMessage('Please Enter your name'),
     body('email').isEmail().withMessage('Email must be valid'),
     body('password')
       .trim()
@@ -15,7 +18,22 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    res.send('everything is fine');
+    const { name, email, password, isFreelancer } = req.body;
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      throw new BadRequestError('Email in use');
+    }
+
+    const user = await User.create({
+      name,
+      email,
+      password,
+      isFreelancer,
+    });
+
+    res.status(201).send(user);
   }
 );
 
