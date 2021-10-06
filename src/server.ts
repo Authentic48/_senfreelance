@@ -3,9 +3,12 @@ import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from './errors/not-found-error';
 import 'express-async-errors';
 
-const app = express();
+import { signupRouter } from './routes/signup';
 
+const app = express();
 app.use(express.json());
+
+app.use(signupRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
