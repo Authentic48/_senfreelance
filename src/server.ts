@@ -9,6 +9,7 @@ import { signupRouter } from './routes/signup';
 import { ConnectDB } from './config/db';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
+import { currentUserRouter } from './routes/current-user';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ ConnectDB();
 app.use(signupRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
+app.use(currentUserRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
