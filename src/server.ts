@@ -8,6 +8,7 @@ import { NotFoundError } from './errors/not-found-error';
 import { signupRouter } from './routes/signup';
 import { ConnectDB } from './config/db';
 import { signinRouter } from './routes/signin';
+import { signoutRouter } from './routes/signout';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ ConnectDB();
 
 app.use(signupRouter);
 app.use(signinRouter);
+app.use(signoutRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
