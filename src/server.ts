@@ -7,6 +7,7 @@ import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from './errors/not-found-error';
 import { signupRouter } from './routes/signup';
 import { ConnectDB } from './config/db';
+import { signinRouter } from './routes/signin';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(
 ConnectDB();
 
 app.use(signupRouter);
+app.use(signinRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
