@@ -1,5 +1,4 @@
 import express, { json, Request, Response } from 'express';
-import dotenv from 'dotenv';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
