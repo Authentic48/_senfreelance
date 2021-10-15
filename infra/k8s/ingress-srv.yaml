@@ -14,3 +14,7 @@ spec:
             backend:
               serviceName: auth-srv
               servicePort: 5000
+          - path: /api/freelancers/?(.*)
+            backend:
+              serviceName: freelancers-srv
+              servicePort: 5000

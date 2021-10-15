@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freelancers-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freelancers
+  template:
+    metadata:
+      labels:
+        app: freelancers
+    spec:
+      containers:
+        - name: freelancers
+          image: authentic048/freelancers
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://freelancers-mongo-srv:27017/freelancers'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: freelancers-srv
+spec:
+  selector:
+    app: freelancers
+  ports:
+    - name: freelancers
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
