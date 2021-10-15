@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { BadRequestError } from '../errors/bad-request';
+import { BadRequestError } from '../../../common/src/errors/bad-request';
 import { validateRequest } from '../middlewares/request-validation';
 import { User } from '../models/user-model';
 import jwt from 'jsonwebtoken';

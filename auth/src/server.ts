@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from './errors/not-found-error';
+import { errorHandler } from '../../common/src/middlewares/error-handler';
+import { NotFoundError } from '../../common/src/errors/not-found-error';
 import { signupRouter } from './routes/signup';
 import { ConnectDB } from './config/db';
 import { signinRouter } from './routes/signin';
