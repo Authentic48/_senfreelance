@@ -1,6 +1,6 @@
 {
-  "name": "@authentic048/senfreelance",
-  "version": "1.0.1",
+  "name": "@senfreelance/common",
+  "version": "1.0.0",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
