@@ -1,7 +1,11 @@
 import express, { json, Request, Response } from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-import { errorHandler, NotFoundError } from '@senefreelance/common';
+import {
+  currentUser,
+  errorHandler,
+  NotFoundError,
+} from '@senefreelance/common';
 import { ConnectDB } from './config/db';
 
 import { createFreelancerRoute } from './routes/new';
@@ -19,6 +23,8 @@ app.use(
   })
 );
 ConnectDB();
+
+app.use(currentUser);
 
 app.use(createFreelancerRoute);
 app.use(updateFreelancerRoute);
