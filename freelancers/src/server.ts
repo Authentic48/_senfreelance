@@ -1,44 +1,20 @@
-import express, { json, Request, Response } from 'express';
-import 'express-async-errors';
-import cookieSession from 'cookie-session';
-import {
-  currentUser,
-  errorHandler,
-  NotFoundError,
-} from '@senefreelance/common';
+import { app } from './app';
 import { ConnectDB } from './config/db';
 
-import { createFreelancerRoute } from './routes/new';
-import { updateFreelancerRoute } from './routes/update';
-import { getAllFreelancersRoute } from './routes';
-import { showFreelancerRoute } from './routes/show';
+const start = () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY must be defined');
+  }
 
-const app = express();
-app.use(express.json());
-app.set('trust proxy', true);
-app.use(
-  cookieSession({
-    signed: false,
-    secure: false,
-  })
-);
-ConnectDB();
+  if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI must be defined');
+  }
 
-app.use(currentUser);
+  ConnectDB();
 
-app.use(createFreelancerRoute);
-app.use(updateFreelancerRoute);
-app.use(getAllFreelancersRoute);
-app.use(showFreelancerRoute);
+  const PORT = process.env.PORT || 5000;
 
-app.all('*', async () => {
-  throw new NotFoundError();
-});
-
-app.use(errorHandler);
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`App in developement is running on ${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(`App in developement is running on ${PORT}`);
+  });
+};
