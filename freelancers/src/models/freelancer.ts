@@ -43,7 +43,7 @@ const freelancerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    usedId: {
+    userId: {
       type: String,
       required: true,
     },
