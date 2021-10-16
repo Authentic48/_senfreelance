@@ -4,6 +4,9 @@ import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { app } from '../app';
 
+declare global {
+  var signin: () => Promise<string[]>;
+}
 let mongo: any;
 
 beforeAll(async () => {
@@ -30,3 +33,18 @@ afterAll(async () => {
 
   await mongoose.connection.close();
 });
+
+global.signin = async () => {
+  const response = await request(app)
+    .post('/api/users/signup')
+    .send({
+      name: 'test',
+      email: 'test@test.com',
+      password: 'password',
+    })
+    .expect(201);
+
+  const cookie = response.get('Set-Cookie');
+
+  return cookie;
+};
