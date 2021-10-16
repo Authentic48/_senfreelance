@@ -3,7 +3,7 @@ import request from 'supertest';
 
 describe('POST /api/users/signup', () => {
   it('returns a 201 ', async () => {
-    return request(app)
+    const response = await request(app)
       .post('/api/users/signup')
       .send({
         name: 'test',
@@ -11,6 +11,8 @@ describe('POST /api/users/signup', () => {
         password: 'password',
       })
       .expect(201);
+
+    expect(response.get('Set-Cookie')).toBeDefined();
   });
 
   it('returns a 400 with some missing inputs', async () => {
