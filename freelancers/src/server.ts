@@ -44,3 +44,5 @@ const start = () => {
     console.log(`App in developement is running on ${PORT}`);
   });
 };
+
+start();
