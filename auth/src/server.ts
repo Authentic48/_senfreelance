@@ -1,38 +1,22 @@
-import express, { json, Request, Response } from 'express';
-import 'express-async-errors';
-import cookieSession from 'cookie-session';
-
-import { errorHandler, NotFoundError } from '@senefreelance/common';
-import { signupRouter } from './routes/signup';
 import { ConnectDB } from './config/db';
-import { signinRouter } from './routes/signin';
-import { signoutRouter } from './routes/signout';
-import { currentUserRouter } from './routes/current-user';
+import { app } from './app';
 
-const app = express();
-app.use(express.json());
-app.set('trust proxy', true);
-app.use(
-  cookieSession({
-    signed: false,
-    secure: false,
-  })
-);
-ConnectDB();
+const start = () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY must be defined');
+  }
 
-app.use(signupRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(currentUserRouter);
+  if (!process.env.MONGO_URI) {
+    throw new Error('MONGO_URI must be defined');
+  }
 
-app.all('*', async () => {
-  throw new NotFoundError();
-});
+  ConnectDB();
 
-app.use(errorHandler);
+  const PORT = process.env.PORT || 5000;
 
-const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`App in developement is running on ${PORT}`);
+  });
+};
 
-app.listen(PORT, () => {
-  console.log(`App in developement is running on ${PORT}`);
-});
+start();
