@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { Freelancer } from '../../models/freelancer';
+import { natsWrapper } from '../../natsWrapper';
 
 describe('POST /api/freelancers/', () => {
   const cookie = global.signin();
@@ -55,5 +56,19 @@ describe('POST /api/freelancers/', () => {
     freelancers = await Freelancer.find({});
     expect(freelancers.length).toEqual(1);
     expect(freelancers[0].phone).toEqual('125648782');
+  });
+
+  it('publishes an event', async () => {
+    await request(app)
+      .post('/api/freelancers/')
+      .set('Cookie', global.signin())
+      .send({
+        phone: '125648782',
+        profession: 'developer',
+        bio: 'this our bio',
+      })
+      .expect(201);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
   });
 });
