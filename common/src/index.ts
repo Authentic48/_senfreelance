@@ -9,3 +9,7 @@ export * from './middlewares/current-user';
 export * from './middlewares/error-handler';
 export * from './middlewares/require-auth';
 export * from './middlewares/request-validation';
+
+export * from './events/freelancer-created-listener';
+export * from './events/listener';
+export * from './events/subject';
