@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
+import { natsWrapper } from '../../natsWrapper';
 
 describe('PUT /api/freelancers/:id', () => {
   it('returns a 404 if the provide id does not exist', async () => {
@@ -104,5 +105,31 @@ describe('PUT /api/freelancers/:id', () => {
       .send();
 
     expect(updatedresponse.body.profession).toEqual('backend developer');
+  });
+
+  it('publishes an event', async () => {
+    const cookie = global.signin();
+
+    const response = await request(app)
+      .post('/api/freelancers')
+      .set('Cookie', cookie)
+      .send({
+        phone: '125648782',
+        profession: 'developer',
+        bio: 'this our bio',
+      })
+      .expect(201);
+
+    await request(app)
+      .put(`/api/freelancers/${response.body.id}`)
+      .set('Cookie', cookie)
+      .send({
+        phone: '125648782',
+        profession: 'backend developer',
+        bio: 'this our updated bio',
+      })
+      .expect(200);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
   });
 });
