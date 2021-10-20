@@ -15,3 +15,4 @@ export * from './events/freelancer-updated-event';
 export * from './events/listener';
 export * from './events/subject';
 export * from './events/publisher';
+export * from './types/order-status';
