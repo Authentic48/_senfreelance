@@ -6,6 +6,10 @@ import {
   errorHandler,
   NotFoundError,
 } from '@senefreelance/common';
+import { newOrderRoute } from './routes/new';
+import { updateOrderRoute } from './routes/delete';
+import { showOrderRoute } from './routes/show';
+import { indexOrdersRoute } from './routes';
 
 const app = express();
 app.use(express.json());
@@ -18,6 +22,11 @@ app.use(
 );
 
 app.use(currentUser);
+
+app.use(newOrderRoute);
+app.use(updateOrderRoute);
+app.use(showOrderRoute);
+app.use(indexOrdersRoute);
 
 app.all('*', async () => {
   throw new NotFoundError();

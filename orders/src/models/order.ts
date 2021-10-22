@@ -15,7 +15,7 @@ interface OrderDoc extends mongoose.Document {
   userId: string;
   status: Orderstatus;
   expiresAt: Date;
-  freelancer: string;
+  freelancer: FreelancerDoc;
   price: number;
   task: string;
 }
