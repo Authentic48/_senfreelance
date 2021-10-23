@@ -9,6 +9,7 @@ interface FreelancerAttrs {
   bio: string;
   profession: string;
   userId: string;
+  id: string;
 }
 
 export interface FreelancerDoc extends mongoose.Document {
@@ -62,7 +63,15 @@ const freelancerSchema = new mongoose.Schema(
 );
 
 freelancerSchema.statics.build = (attrs: FreelancerAttrs) => {
-  return new Freelancer(attrs);
+  return new Freelancer({
+    _id: attrs.id,
+    name: attrs.name,
+    email: attrs.email,
+    phone: attrs.phone,
+    bio: attrs.bio,
+    userId: attrs.userId,
+    profession: attrs.profession,
+  });
 };
 
 freelancerSchema.methods.isBusy = async function () {

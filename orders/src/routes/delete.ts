@@ -8,7 +8,7 @@ import {
 import { body } from 'express-validator';
 import mongoose from 'mongoose';
 import { Order } from '../models/order';
-import { OrderCancelledPublisher } from '../events/order-cancelled-publisher';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
 import { natsWrapper } from '../natsWrapper';
 
 const router = express.Router();

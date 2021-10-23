@@ -10,7 +10,7 @@ import { body } from 'express-validator';
 import mongoose from 'mongoose';
 import { Freelancer } from '../models/freelancer';
 import { Order } from '../models/order';
-import { OrderCreatedPublisher } from '../events/order-created-publisher';
+import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
 import { natsWrapper } from '../natsWrapper';
 
 const router = express.Router();
