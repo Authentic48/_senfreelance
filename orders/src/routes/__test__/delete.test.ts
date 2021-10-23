@@ -33,5 +33,12 @@ describe('PUT /api/orders/:orderId', () => {
       .set('Cookie', user)
       .send()
       .expect(204);
+
+    // expectation to make sure the thing is cancelled
+    const updatedOrder = await Order.findById(order.id);
+
+    console.log(updatedOrder);
+
+    expect(updatedOrder!.status).toEqual(Orderstatus.Cancelled);
   });
 });

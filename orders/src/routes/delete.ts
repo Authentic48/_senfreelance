@@ -32,7 +32,7 @@ router.put(
     }
 
     order.set({
-      orderstatus: Orderstatus.Cancelled,
+      status: Orderstatus.Cancelled,
     });
 
     await order.save();
