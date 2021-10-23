@@ -1,8 +1,10 @@
 import { app } from './app';
 import { ConnectDB } from './config/db';
 import { natsWrapper } from './natsWrapper';
+import { FreelancerCreatedListener } from './events/listeners/freelancer-created-listener';
+import { FreelancerUpdatedListener } from './events/listeners/freelancer-updated-listener';
 
-const start = () => {
+const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
   }
@@ -22,19 +24,22 @@ const start = () => {
     throw new Error('NATS_CLUSTER_ID must be defined');
   }
 
-  natsWrapper.connect(
+  await natsWrapper.connect(
     process.env.NATS_CLUSTER_ID,
     process.env.NATS_CLIENT_ID,
     process.env.NATS_URL
   );
 
-  natsWrapper.client.on('close', () => {
+  await natsWrapper.client.on('close', () => {
     console.log('NATS connection closed!');
     process.exit();
   });
 
   process.on('SIGINT', () => natsWrapper.client.close());
   process.on('SIGTERM', () => natsWrapper.client.close());
+
+  new FreelancerUpdatedListener(natsWrapper.client).listen();
+  new FreelancerCreatedListener(natsWrapper.client).listen();
 
   ConnectDB();
 
