@@ -10,6 +10,8 @@ import { body } from 'express-validator';
 import mongoose from 'mongoose';
 import { Freelancer } from '../models/freelancer';
 import { Order } from '../models/order';
+import { OrderCreatedPublisher } from '../events/order-created-publisher';
+import { natsWrapper } from '../natsWrapper';
 
 const router = express.Router();
 
@@ -59,6 +61,23 @@ router.post(
     await order.save();
 
     // Publish an event saying that an order was created
+    new OrderCreatedPublisher(natsWrapper.client).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      task: order.task,
+      freelancer: {
+        id: freelancer.id,
+        bio: freelancer.bio,
+        name: freelancer.name,
+        email: freelancer.email,
+        userId: freelancer.userId,
+        phone: freelancer.phone,
+        profession: freelancer.profession,
+      },
+      expiresAt: order.expiresAt.toString(),
+      price: order.price,
+    });
 
     res.status(201).send(order);
   }

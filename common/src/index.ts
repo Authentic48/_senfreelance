@@ -16,3 +16,5 @@ export * from './events/listener';
 export * from './events/subject';
 export * from './events/publisher';
 export * from './types/order-status';
+export * from './events/order-cancelled-event';
+export * from './events/order-created-event';

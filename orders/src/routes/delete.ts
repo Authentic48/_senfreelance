@@ -8,6 +8,8 @@ import {
 import { body } from 'express-validator';
 import mongoose from 'mongoose';
 import { Order } from '../models/order';
+import { OrderCancelledPublisher } from '../events/order-cancelled-publisher';
+import { natsWrapper } from '../natsWrapper';
 
 const router = express.Router();
 
@@ -36,6 +38,13 @@ router.put(
     });
 
     await order.save();
+
+    new OrderCancelledPublisher(natsWrapper.client).publish({
+      id: order.id,
+      freelancer: {
+        id: order.freelancer.id,
+      },
+    });
 
     return res.status(204).send(order);
   }
