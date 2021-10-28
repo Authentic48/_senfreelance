@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface FreelancerAttrs {
   name: string;
@@ -16,6 +17,7 @@ interface FreelancerDoc extends mongoose.Document {
   bio: string;
   profession: string;
   userId: string;
+  version: number;
 }
 
 interface FreelancerModel extends mongoose.Model<FreelancerDoc> {
@@ -58,6 +60,8 @@ const freelancerSchema = new mongoose.Schema(
     },
   }
 );
+freelancerSchema.set('versionKey', 'version');
+freelancerSchema.plugin(updateIfCurrentPlugin);
 
 freelancerSchema.statics.build = (attrs: FreelancerAttrs) => {
   return new Freelancer(attrs);

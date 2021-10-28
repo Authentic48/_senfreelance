@@ -23,6 +23,7 @@ describe('POST /api/orders', () => {
 
   it('returns an error if the freelancer is busy', async () => {
     const freelancer = Freelancer.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       phone: '125648782',
       profession: 'developer',
       bio: 'this our bio',
@@ -54,6 +55,7 @@ describe('POST /api/orders', () => {
 
   it('creates an order', async () => {
     const freelancer = Freelancer.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       phone: '125648782',
       profession: 'developer',
       bio: 'this our bio',
@@ -71,6 +73,7 @@ describe('POST /api/orders', () => {
   });
   it('emits an order created event', async () => {
     const freelancer = Freelancer.build({
+      id: new mongoose.Types.ObjectId().toHexString(),
       phone: '125648782',
       profession: 'developer',
       bio: 'this our bio',

@@ -13,6 +13,7 @@ const createFreelancer = async () => {
     name: 'test',
     email: 'test@test.com',
     userId: 'vtd4sdzahg',
+    id: new mongoose.Types.ObjectId().toHexString(),
   });
 
   await freelancer.save();

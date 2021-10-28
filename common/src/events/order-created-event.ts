@@ -7,6 +7,7 @@ export interface OrderCreatedEvent {
     status: Orderstatus;
     userId: string;
     expiresAt: string;
+    version: number;
     freelancer: {
       id: string;
       name: string;

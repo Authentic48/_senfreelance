@@ -1,4 +1,5 @@
 import { Orderstatus } from '@senefreelance/common';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import mongoose from 'mongoose';
 import { Order } from './order';
 
@@ -19,11 +20,16 @@ export interface FreelancerDoc extends mongoose.Document {
   bio: string;
   profession: string;
   userId: string;
+  version: number;
   isBusy(): Promise<boolean>;
 }
 
 interface FreelancerModel extends mongoose.Model<FreelancerDoc> {
   build(attrs: FreelancerAttrs): FreelancerDoc;
+  findByEvent(event: {
+    id: string;
+    version: number;
+  }): Promise<FreelancerDoc | null>;
 }
 const freelancerSchema = new mongoose.Schema(
   {
@@ -73,7 +79,17 @@ freelancerSchema.statics.build = (attrs: FreelancerAttrs) => {
     profession: attrs.profession,
   });
 };
-
+freelancerSchema.statics.findByEvent = (event: {
+  id: string;
+  version: number;
+}) => {
+  return Freelancer.findOne({
+    _id: event.id,
+    version: event.version - 1,
+  });
+};
+freelancerSchema.set('versionKey', 'version');
+freelancerSchema.plugin(updateIfCurrentPlugin);
 freelancerSchema.methods.isBusy = async function () {
   const existingOrder = await Order.findOne({
     freelancer: this as any,
