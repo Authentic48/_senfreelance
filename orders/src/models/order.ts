@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { version } from 'mongoose';
 import { Orderstatus } from '@senefreelance/common';
 import { FreelancerDoc } from './freelancer';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface OrderAttrs {
   userId: string;
@@ -62,7 +63,8 @@ const orderSchema = new mongoose.Schema(
     },
   }
 );
-
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
 };
