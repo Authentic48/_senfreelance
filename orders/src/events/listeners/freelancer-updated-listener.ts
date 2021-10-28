@@ -14,10 +14,7 @@ export class FreelancerUpdatedListener extends Listener<FreelancerUpdatedEvent> 
   async onMessage(data: FreelancerUpdatedEvent['data'], msg: Message) {
     const { bio, name, email, phone, userId, profession, id } = data;
 
-    const freelancer = await Freelancer.findOne({
-      _id: data.id,
-      version: data.version - 1,
-    });
+    const freelancer = await Freelancer.findByEvent(data);
 
     if (!freelancer) {
       throw new Error('Freelancer not found');

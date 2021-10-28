@@ -26,6 +26,10 @@ export interface FreelancerDoc extends mongoose.Document {
 
 interface FreelancerModel extends mongoose.Model<FreelancerDoc> {
   build(attrs: FreelancerAttrs): FreelancerDoc;
+  findByEvent(event: {
+    id: string;
+    version: number;
+  }): Promise<FreelancerDoc | null>;
 }
 const freelancerSchema = new mongoose.Schema(
   {
@@ -73,6 +77,15 @@ freelancerSchema.statics.build = (attrs: FreelancerAttrs) => {
     bio: attrs.bio,
     userId: attrs.userId,
     profession: attrs.profession,
+  });
+};
+freelancerSchema.statics.findByEvent = (event: {
+  id: string;
+  version: number;
+}) => {
+  return Freelancer.findOne({
+    _id: event.id,
+    version: event.version - 1,
   });
 };
 freelancerSchema.set('versionKey', 'version');
