@@ -49,3 +49,23 @@ it('finds, updates and saves a freelancer', async () => {
   expect(updatedfreelancer!.email).toEqual(data.email);
   expect(updatedfreelancer!.version).toEqual(data.version);
 });
+
+it('acks the message', async () => {
+  const { listener, data, msg } = await setup();
+
+  await listener.onMessage(data, msg);
+
+  expect(msg.ack).toHaveBeenCalled();
+});
+
+it('does not call ack if the event has a skipped version number', async () => {
+  const { listener, data, msg, freelancer } = await setup();
+
+  data.version = 10;
+
+  try {
+    await listener.onMessage(data, msg);
+  } catch (error) {
+    expect(msg.ack).not.toHaveBeenCalled();
+  }
+});
