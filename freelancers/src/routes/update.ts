@@ -50,6 +50,7 @@ router.put(
       profession: freelancer.profession,
       userId: freelancer.userId,
       name: freelancer.name,
+      version: freelancer.version,
     });
 
     return res.status(200).send(freelancer);

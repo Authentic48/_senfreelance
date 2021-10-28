@@ -10,5 +10,6 @@ export interface FreelancerCreatedEvent {
     email: string;
     phone: string;
     userId: string;
+    version: number;
   };
 }

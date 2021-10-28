@@ -41,6 +41,7 @@ router.put(
 
     new OrderCancelledPublisher(natsWrapper.client).publish({
       id: order.id,
+      version: order.version,
       freelancer: {
         id: order.freelancer.id,
       },

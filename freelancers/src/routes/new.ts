@@ -37,6 +37,7 @@ router.post(
       profession: freelancer.profession,
       userId: freelancer.userId,
       name: freelancer.name,
+      version: freelancer.version,
     });
 
     return res.status(201).send(freelancer);

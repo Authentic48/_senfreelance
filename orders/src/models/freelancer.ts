@@ -1,4 +1,5 @@
 import { Orderstatus } from '@senefreelance/common';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import mongoose from 'mongoose';
 import { Order } from './order';
 
@@ -19,6 +20,7 @@ export interface FreelancerDoc extends mongoose.Document {
   bio: string;
   profession: string;
   userId: string;
+  version: number;
   isBusy(): Promise<boolean>;
 }
 
@@ -73,7 +75,8 @@ freelancerSchema.statics.build = (attrs: FreelancerAttrs) => {
     profession: attrs.profession,
   });
 };
-
+freelancerSchema.set('versionKey', 'version');
+freelancerSchema.plugin(updateIfCurrentPlugin);
 freelancerSchema.methods.isBusy = async function () {
   const existingOrder = await Order.findOne({
     freelancer: this as any,

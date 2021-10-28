@@ -18,6 +18,7 @@ interface OrderDoc extends mongoose.Document {
   freelancer: FreelancerDoc;
   price: number;
   task: string;
+  version: number;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {

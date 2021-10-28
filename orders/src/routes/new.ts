@@ -77,6 +77,7 @@ router.post(
       },
       expiresAt: order.expiresAt.toString(),
       price: order.price,
+      version: order.version,
     });
 
     res.status(201).send(order);
