@@ -32,3 +32,11 @@ build:
         manual:
           - src: 'orders/src/**/*.ts'
             dest: .
+    - image: authentic048/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'payments/src/**/*.ts'
+            dest: .
