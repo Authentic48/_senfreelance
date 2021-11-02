@@ -1,7 +1,8 @@
 import { app } from './app';
 import { ConnectDB } from './config/db';
 import { natsWrapper } from './natsWrapper';
-
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
+import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
 const start = () => {
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
@@ -35,6 +36,9 @@ const start = () => {
 
   process.on('SIGINT', () => natsWrapper.client.close());
   process.on('SIGTERM', () => natsWrapper.client.close());
+
+  new OrderCancelledListener(natsWrapper.client).listen();
+  new OrderCreatedListener(natsWrapper.client).listen();
 
   ConnectDB();
 
