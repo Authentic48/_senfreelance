@@ -3,7 +3,8 @@ import { ConnectDB } from './config/db';
 import { natsWrapper } from './natsWrapper';
 import { OrderCreatedListener } from './events/listeners/order-created-listener';
 import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
-const start = () => {
+
+const start = async () => {
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY must be defined');
   }
@@ -23,7 +24,7 @@ const start = () => {
     throw new Error('NATS_CLUSTER_ID must be defined');
   }
 
-  natsWrapper.connect(
+  await natsWrapper.connect(
     process.env.NATS_CLUSTER_ID,
     process.env.NATS_CLIENT_ID,
     process.env.NATS_URL

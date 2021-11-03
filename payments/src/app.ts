@@ -6,6 +6,7 @@ import {
   errorHandler,
   NotFoundError,
 } from '@senefreelance/common';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use(
 );
 
 app.use(currentUser);
+app.use(createChargeRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();
