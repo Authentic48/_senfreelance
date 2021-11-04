@@ -12,6 +12,8 @@ import cookieSession from 'cookie-session';
 import { Order } from '../models/order';
 import { stripe } from '../stripe';
 import { Payment } from '../models/payment';
+import { PaymentCreatedPublisher } from '../events/publishers/payment-created-publisher';
+import { natsWrapper } from '../natsWrapper';
 
 const router = express.Router();
 
@@ -49,7 +51,13 @@ router.post(
     });
 
     await payment.save();
-    return res.status(201).send({ success: true });
+
+    await new PaymentCreatedPublisher(natsWrapper.client).publish({
+      orderId: payment.orderId,
+      id: payment.id,
+      stripeId: payment.stripeId,
+    });
+    return res.status(201).send({ id: payment.id });
   }
 );
 
