@@ -1,7 +1,8 @@
 <h1 align="center"> Senefreelance </h1> <br>
 
 <p align="center">
-  Senefreelance is an advertising portal where you can find freelancers, assign them tasks. This project was built using microserive architecture.
+  Senefreelance is an advertising portal where you can find freelancers, assign them tasks. 
+  This project was built using microserive architecture.
 </p>
 
 
