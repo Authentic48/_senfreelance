@@ -42,7 +42,7 @@ NodeJs installalation in all microservices is necessary in order to run the proj
 
 ### Skaffold 
 it's necessary in order to automatically sync all changes, build the image and deploy it in the cluster
-* [skaffolf](https://skaffold.dev)
+* [skaffold](https://skaffold.dev)
 
 
 ## Quick start
