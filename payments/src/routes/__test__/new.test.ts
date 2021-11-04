@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { Order } from '../../models/order';
 import { Orderstatus } from '@senefreelance/common';
 import { stripe } from '../../stripe';
+import { Payment } from '../../models/payment';
 
 jest.mock('../../stripe');
 describe('POST /api/payments', () => {
@@ -91,5 +92,12 @@ describe('POST /api/payments', () => {
     expect(chargeOptions.source).toEqual('tok_visa');
     expect(chargeOptions.amount).toEqual(54 * 100);
     expect(chargeOptions.currency).toEqual('usd');
+
+    const payment = await Payment.findOne({
+      orderId: order.id,
+      stripeId: chargeOptions!.id,
+    });
+
+    expect(payment).not.toBeNull();
   });
 });
