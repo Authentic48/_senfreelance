@@ -61,3 +61,226 @@ npm run test
 
 ## Api 
 
+
+## Signup 
+### Request 
+`POST '/api/users/signup'`
+### Response
+
+``` 
+cookie: {jwt: 'token'}
+{
+ 'id': 'id',
+ 'name': 'name',
+ 'email': 'email',
+}
+```
+## Signin
+### Request 
+`POST '/api/users/signin'`
+### Response
+
+``` 
+cookie: {jwt: 'token'}
+{
+ 'id': 'id',
+ 'name': 'name',
+ 'email': 'email',
+}
+```
+## Signout 
+### Request 
+`POST '/api/users/signout'`
+### Response
+
+``` 
+{}
+```
+## Current-user 
+### Request 
+`GET '/api/users/current-user'`
+### Response
+
+``` 
+cookie: {jwt: 'token'}
+{
+ 'id': 'id',
+ 'name': 'name',
+ 'email': 'email',
+}
+```
+## Freelancer
+## New 
+### Request 
+`POST '/api/freelancers/new'`
+### Response
+
+``` 
+{
+ 'id': 'id',
+ 'name': 'name',
+ 'email': 'email',
+ 'phone': 'phone number',
+ 'bio': 'bio description',
+ 'Profession': 'profession',
+ 'userId': 'user-id'
+}
+```
+
+## Index 
+### Request 
+`GET '/api/freelancers/'`
+### Response
+
+``` 
+[
+{
+ 'id': 'id',
+ 'name': 'name',
+ 'email': 'email',
+ 'phone': 'phone number',
+ 'bio': 'bio description',
+ 'Profession': 'profession'
+}
+]
+```
+## Show 
+### Request 
+`GET '/api/freelancers/:id'`
+### Response
+
+``` 
+{
+ 'id': 'id',
+ 'name': 'name',
+ 'email': 'email',
+ 'phone': 'phone number',
+ 'bio': 'bio description',
+ 'Profession': 'profession',
+ 'userId': 'user-id'
+}
+```
+## Update 
+### Request 
+`PUT '/api/freelancers/:id'`
+### Response
+
+``` 
+{
+ 'id': 'id',
+ 'name': 'name',
+ 'email': 'email',
+ 'phone': 'phone number',
+ 'bio': 'bio description',
+ 'Profession': 'profession',
+ 'userId': 'user-id'
+}
+```
+## Order
+## New 
+### Request 
+`POST '/api/orders/'`
+### Response
+
+``` 
+{
+      status: 'status',
+      userId: 'user-id',
+      task: 'task description',
+      freelancer: {
+        'id': 'id',
+        'name': 'name',
+        'email': 'email',
+        'phone': 'phone number',
+        'bio': 'bio description',
+        'Profession': 'profession',
+        'userId': 'user-id'
+      },
+      expiresAt: '421841284',
+      price: price,
+      version: version
+}
+```
+## Show 
+### Request 
+`GET '/api/orders/:id'`
+### Response
+
+``` 
+{
+      status: 'status',
+      userId: 'user-id',
+      task: 'task description',
+      freelancer: {
+        'id': 'id',
+        'name': 'name',
+        'email': 'email',
+        'phone': 'phone number',
+        'bio': 'bio description',
+        'Profession': 'profession',
+        'userId': 'user-id'
+      },
+      expiresAt: '421841284',
+      price: price,
+      version: version
+}
+```
+## Cancel 
+### Request 
+`PUT '/api/orders/:id'`
+### Response
+
+``` 
+{
+      status: 'cancelled',
+      userId: 'user-id',
+      task: 'task description',
+      freelancer: {
+        'id': 'id',
+        'name': 'name',
+        'email': 'email',
+        'phone': 'phone number',
+        'bio': 'bio description',
+        'Profession': 'profession',
+        'userId': 'user-id'
+      },
+      expiresAt: '421841284',
+      price: price,
+      version: version
+}
+```
+## Index 
+### Request 
+`POST '/api/orders/'`
+### Response
+
+``` 
+[
+{
+      status: 'status',
+      userId: 'user-id',
+      task: 'task description',
+      freelancer: {
+        'id': 'id',
+        'name': 'name',
+        'email': 'email',
+        'phone': 'phone number',
+        'bio': 'bio description',
+        'Profession': 'profession',
+        'userId': 'user-id'
+      },
+      expiresAt: '421841284',
+      price: price,
+      version: version
+},
+]
+```
+## Payment
+`POST '/api/payments/'` 
+### Response 
+```
+{
+    'id': 'payment-id',
+    'orderId': 'order-id'
+}
+```
