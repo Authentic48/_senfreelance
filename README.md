@@ -13,7 +13,7 @@
 - [Quick Start](#quick-start)
 - [Testing](#testing)
 - [API](#requirements)
-- [Acknowledgements](#acknowledgements)
+
 
 
 ## Introduction
