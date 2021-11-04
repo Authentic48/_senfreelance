@@ -3,6 +3,7 @@ import { ConnectDB } from './config/db';
 import { natsWrapper } from './natsWrapper';
 import { FreelancerCreatedListener } from './events/listeners/freelancer-created-listener';
 import { FreelancerUpdatedListener } from './events/listeners/freelancer-updated-listener';
+import { PaymentCreatedListener } from './events/listeners/payment-created-listener';
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
@@ -40,6 +41,7 @@ const start = async () => {
 
   new FreelancerUpdatedListener(natsWrapper.client).listen();
   new FreelancerCreatedListener(natsWrapper.client).listen();
+  new PaymentCreatedListener(natsWrapper.client).listen();
 
   ConnectDB();
 
