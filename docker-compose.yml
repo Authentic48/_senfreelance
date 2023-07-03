@@ -1,0 +1,25 @@
+version: '3.8'
+
+volumes:
+  sen_freelance_volume:
+
+
+networks:
+  sen_freelance_network:
+
+services:
+  sen_freelance_auth_db:
+    image: mongo:latest
+    restart: always
+    command: mongod --auth
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_AUTH_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_AUTH_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_AUTH_DB}
+    volumes:
+      - sen_freelance_volume:/tmp/mongo-data:/data/db
+    ports:
+      - ${MONGO_AUTH_PORT:-27017}:27017
+    networks:
+      - sen_freelance_network
+

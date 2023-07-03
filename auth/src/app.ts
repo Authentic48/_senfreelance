@@ -1,11 +1,10 @@
-import express, { json, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import express, from 'express';
+import 'dotenv/config';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 
 import { errorHandler, NotFoundError } from '@senefreelance/common';
 import { signupRouter } from './routes/signup';
-import { ConnectDB } from './config/db';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { currentUserRouter } from './routes/current-user';
@@ -30,5 +29,4 @@ app.all('*', async () => {
 });
 
 app.use(errorHandler);
-
 export { app };
