@@ -2,12 +2,10 @@ import express from 'express';
 import 'dotenv/config';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-
 import { errorHandler, NotFoundError } from '@senefreelance/common';
-import { signupRouter } from './routes/signup';
-import { signinRouter } from './routes/signin';
-import { signoutRouter } from './routes/signout';
-import { currentUserRouter } from './routes/current-user';
+import { container } from './config/ioc/index';
+import { TYPES } from './config/ioc/types';
+import { AuthController } from './controllers/auth.controller';
 
 const app = express();
 app.use(express.json());
@@ -16,13 +14,10 @@ app.use(
   cookieSession({
     signed: false,
     secure: false,
-  })
+  }),
 );
 
-app.use(signupRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(currentUserRouter);
+app.use('/api/auth/', container.get<AuthController>(TYPES.AuthController).router());
 
 app.all('*', async () => {
   throw new NotFoundError();

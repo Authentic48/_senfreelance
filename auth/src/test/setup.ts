@@ -1,11 +1,10 @@
 import request from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
 import { app } from '../app';
 
 declare global {
-  var signin: () => Promise<string[]>;
+  let signin: () => Promise<string[]>;
 }
 let mongo: any;
 
@@ -23,7 +22,7 @@ beforeEach(async () => {
 
   const collections = await mongoose.connection.db.collections();
 
-  for (let collection of collections) {
+  for (const collection of collections) {
     await collection.deleteMany({});
   }
 });

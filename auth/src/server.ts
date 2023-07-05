@@ -1,4 +1,4 @@
-import { ConnectDB } from './config/db';
+import { ConnectDB } from './config/db.config';
 import { app } from './app';
 
 const start = () => {
